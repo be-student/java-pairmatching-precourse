@@ -2,16 +2,16 @@ package pairmatching.application.port.in;
 
 public class SearchResultCommand {
 
-    private final String function;
+    private final String search;
 
     public SearchResultCommand(String input) {
         if (input == null) {
             throw new IllegalArgumentException("Input에는 null이 올 수 없습니다");
         }
-        function = input;
+        search = input;
     }
 
-    public String getFunction() {
-        return function;
+    public String getSearch() {
+        return search;
     }
 }
