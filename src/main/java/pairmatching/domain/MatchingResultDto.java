@@ -4,13 +4,13 @@ import java.util.List;
 
 public class MatchingResultDto {
 
-    private final List<String> result;
+    private final List<List<String>> result;
 
-    public MatchingResultDto(List<String> result) {
+    public MatchingResultDto(List<List<String>> result) {
         this.result = result;
     }
 
-    public List<String> getResult() {
+    public List<List<String>> getResult() {
         return result;
     }
 }

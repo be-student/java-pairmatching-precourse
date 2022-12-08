@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import pairmatching.application.port.in.PairMatchingUseCase;
 import pairmatching.application.port.in.SearchResultCommand;
 import pairmatching.domain.Course;
@@ -17,7 +18,7 @@ import pairmatching.domain.Search;
 public class PairMatchingService implements PairMatchingUseCase {
 
     private List<Crew> crew = new ArrayList<>();
-    private Map<Search, List<Crew>> matchedResult;
+    private Map<Search, List<List<Crew>>> matchedResult;
 
 
     public PairMatchingService() {
@@ -59,10 +60,22 @@ public class PairMatchingService implements PairMatchingUseCase {
 
     @Override
     public MatchingResultDto matchingResult(SearchResultCommand searchResultCommand) {
-        String search = searchResultCommand.getSearch();
-        return null;
+        Search search = new Search(searchResultCommand.getSearch());
+        if (matchedResult.get(search) == null) {
+            throw new IllegalArgumentException("매칭 이력이 없습니다.");
+        }
+        List<List<String>> result = matchedResult.get(search)
+                .stream()
+                .map(this::getCrewsName)
+                .collect(Collectors.toList());
+        return new MatchingResultDto(result);
     }
 
+    private List<String> getCrewsName(List<Crew> crews) {
+        return crews.stream()
+                .map(Crew::getName)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public void reset() {
