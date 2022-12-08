@@ -50,6 +50,11 @@ public class PairMatchingService implements PairMatchingUseCase {
 
     @Override
     public boolean alreadyExist(SearchResultCommand searchResultCommand) {
+        Search search = new Search(searchResultCommand.getSearch());
+        if (matchedResult.get(search) == null) {
+            return false;
+        }
+        return true;
     }
 
     @Override
