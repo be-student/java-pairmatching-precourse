@@ -5,10 +5,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import pairmatching.application.port.in.PairMatchingUseCase;
 import pairmatching.domain.Course;
 import pairmatching.domain.Crew;
+import pairmatching.domain.MatchingResultDto;
 
-public class PairMatchingService {
+public class PairMatchingService implements PairMatchingUseCase {
 
     private List<Crew> crew;
     private List<Crew> shuffledCrew;
@@ -39,5 +41,25 @@ public class PairMatchingService {
             }
             names.add(new Crew(Course.getFromName(course), name));
         }
+    }
+
+    @Override
+    public boolean alreadyExist() {
+        return false;
+    }
+
+    @Override
+    public void matching() {
+
+    }
+
+    @Override
+    public MatchingResultDto matchingResult() {
+        return null;
+    }
+
+    @Override
+    public void reset() {
+
     }
 }
