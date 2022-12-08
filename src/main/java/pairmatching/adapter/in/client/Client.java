@@ -19,7 +19,7 @@ public class Client {
                 break;
             }
             if (function == Function.SEARCH) {
-                repeat(this::search);
+                search();
             }
             if (function == Function.RESET) {
                 reset();
@@ -28,7 +28,7 @@ public class Client {
     }
 
     private void search() {
-        SearchResultCommand searchResultCommand = InputView.askSearch();
+        SearchResultCommand searchResultCommand = repeat(InputView::askSearch);
         OutputView.printResult(pairMatchingUseCase.matchingResult(searchResultCommand));
     }
 
