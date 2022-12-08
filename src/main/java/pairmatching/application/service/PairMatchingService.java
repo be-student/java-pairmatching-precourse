@@ -4,16 +4,20 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import pairmatching.application.port.in.PairMatchingUseCase;
 import pairmatching.application.port.in.SearchResultCommand;
 import pairmatching.domain.Course;
 import pairmatching.domain.Crew;
 import pairmatching.domain.MatchingResultDto;
+import pairmatching.domain.Search;
 
 public class PairMatchingService implements PairMatchingUseCase {
 
     private List<Crew> crew = new ArrayList<>();
+    private Map<Search, List<Crew>> matchedResult;
 
 
     public PairMatchingService() {
@@ -62,6 +66,6 @@ public class PairMatchingService implements PairMatchingUseCase {
 
     @Override
     public void reset() {
-
+        matchedResult = new HashMap<>();
     }
 }
