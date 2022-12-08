@@ -13,8 +13,8 @@ import pairmatching.domain.MatchingResultDto;
 
 public class PairMatchingService implements PairMatchingUseCase {
 
-    private List<Crew> crew;
-    private List<Crew> shuffledCrew;
+    private List<Crew> crew = new ArrayList<>();
+
 
     public PairMatchingService() {
         init();
@@ -34,13 +34,12 @@ public class PairMatchingService implements PairMatchingUseCase {
     }
 
     private void readFileByLine(BufferedReader br, String course) throws IOException {
-        List<Crew> names = new ArrayList<>();
         while (true) {
             String name = br.readLine();
             if (name == null) {
                 break;
             }
-            names.add(new Crew(Course.getFromName(course), name));
+            crew.add(new Crew(Course.getFromName(course), name));
         }
     }
 
@@ -56,6 +55,7 @@ public class PairMatchingService implements PairMatchingUseCase {
 
     @Override
     public MatchingResultDto matchingResult(SearchResultCommand searchResultCommand) {
+        String search = searchResultCommand.getSearch();
         return null;
     }
 
