@@ -1,5 +1,6 @@
 package pairmatching.adapter.in.client;
 
+import java.util.List;
 import pairmatching.domain.MatchingResultDto;
 
 public class OutputView {
@@ -12,6 +13,12 @@ public class OutputView {
     }
 
     public static void printResult(MatchingResultDto matchingResultDto) {
+        List<List<String>> result = matchingResultDto.getResult();
+        result.forEach(OutputView::printOnePair);
+    }
+
+    private static void printOnePair(List<String> result) {
+        System.out.println(String.join(" : ", result));
     }
 
     public static void printReset() {
