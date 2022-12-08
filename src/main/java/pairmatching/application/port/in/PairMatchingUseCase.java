@@ -6,7 +6,7 @@ public interface PairMatchingUseCase {
 
     boolean alreadyExist(SearchResultCommand searchResultCommand);
 
-    void matching();
+    void matching(SearchResultCommand searchResultCommand);
 
     MatchingResultDto matchingResult(SearchResultCommand searchResultCommand);
 

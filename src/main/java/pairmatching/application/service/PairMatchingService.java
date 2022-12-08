@@ -58,7 +58,7 @@ public class PairMatchingService implements PairMatchingUseCase {
     }
 
     @Override
-    public void matching() {
+    public void matching(SearchResultCommand searchResultCommand) {
 
     }
 
