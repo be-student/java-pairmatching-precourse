@@ -21,12 +21,20 @@ public class Client {
             if (function == Function.SEARCH) {
                 repeat(this::search);
             }
+            if (function == Function.RESET) {
+                reset();
+            }
         }
     }
 
     private void search() {
         SearchResultCommand searchResultCommand = InputView.askSearch();
         OutputView.printResult(pairMatchingUseCase.matchingResult(searchResultCommand));
+    }
+
+    private void reset() {
+        pairMatchingUseCase.reset();
+        OutputView.printReset();
     }
 
     private void repeat(Runnable input) {
