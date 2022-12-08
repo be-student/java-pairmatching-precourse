@@ -24,6 +24,9 @@ public class Client {
             if (function == Function.RESET) {
                 reset();
             }
+            if (function == Function.MATCHING) {
+                matching();
+            }
         }
     }
 
@@ -35,6 +38,22 @@ public class Client {
     private void reset() {
         pairMatchingUseCase.reset();
         OutputView.printReset();
+    }
+
+    private void matching() {
+        SearchResultCommand searchResultCommand = repeat(InputView::askSearch);
+        if (pairMatchingUseCase.alreadyExist(searchResultCommand)) {
+            ReMatching reMatching = askReMatching();
+            if (reMatching == ReMatching.PASS) {
+                return;
+            }
+        }
+        pairMatchingUseCase.matching(searchResultCommand);
+        OutputView.printResult(pairMatchingUseCase.matchingResult(searchResultCommand));
+    }
+
+    private ReMatching askReMatching() {
+        return repeat(InputView::askReMatching);
     }
 
     private void repeat(Runnable input) {
