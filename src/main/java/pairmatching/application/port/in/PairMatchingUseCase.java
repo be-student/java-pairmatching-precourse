@@ -4,7 +4,7 @@ import pairmatching.domain.MatchingResultDto;
 
 public interface PairMatchingUseCase {
 
-    boolean alreadyExist();
+    boolean alreadyExist(SearchResultCommand searchResultCommand);
 
     void matching();
 

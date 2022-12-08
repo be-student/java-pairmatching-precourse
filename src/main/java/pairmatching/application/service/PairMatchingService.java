@@ -49,8 +49,7 @@ public class PairMatchingService implements PairMatchingUseCase {
     }
 
     @Override
-    public boolean alreadyExist() {
-        return false;
+    public boolean alreadyExist(SearchResultCommand searchResultCommand) {
     }
 
     @Override
