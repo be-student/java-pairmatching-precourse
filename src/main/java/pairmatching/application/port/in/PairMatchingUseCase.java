@@ -8,7 +8,7 @@ public interface PairMatchingUseCase {
 
     void matching();
 
-    MatchingResultDto matchingResult();
+    MatchingResultDto matchingResult(SearchResultCommand searchResultCommand);
 
     void reset();
 }

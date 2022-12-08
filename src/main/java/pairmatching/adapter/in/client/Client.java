@@ -2,13 +2,14 @@ package pairmatching.adapter.in.client;
 
 import java.util.function.Supplier;
 import pairmatching.application.port.in.PairMatchingUseCase;
+import pairmatching.application.port.in.SearchResultCommand;
 
 public class Client {
 
-    private final PairMatchingUseCase pairMatchingService;
+    private final PairMatchingUseCase pairMatchingUseCase;
 
     public Client(PairMatchingUseCase pairMatchingService) {
-        this.pairMatchingService = pairMatchingService;
+        pairMatchingUseCase = pairMatchingService;
     }
 
     public void run() {

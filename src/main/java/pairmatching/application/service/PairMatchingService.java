@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import pairmatching.application.port.in.PairMatchingUseCase;
+import pairmatching.application.port.in.SearchResultCommand;
 import pairmatching.domain.Course;
 import pairmatching.domain.Crew;
 import pairmatching.domain.MatchingResultDto;
@@ -54,9 +55,10 @@ public class PairMatchingService implements PairMatchingUseCase {
     }
 
     @Override
-    public MatchingResultDto matchingResult() {
+    public MatchingResultDto matchingResult(SearchResultCommand searchResultCommand) {
         return null;
     }
+
 
     @Override
     public void reset() {
