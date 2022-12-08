@@ -18,7 +18,15 @@ public class Client {
             if (function == Function.QUIT) {
                 break;
             }
+            if (function == Function.SEARCH) {
+                repeat(this::search);
+            }
         }
+    }
+
+    private void search() {
+        SearchResultCommand searchResultCommand = InputView.askSearch();
+        OutputView.printResult(pairMatchingUseCase.matchingResult(searchResultCommand));
     }
 
     private void repeat(Runnable input) {
