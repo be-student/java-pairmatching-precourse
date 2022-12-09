@@ -1,5 +1,6 @@
 package pairmatching.domain;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -15,14 +16,26 @@ public class Search {
         validate(input);
         String[] token = input.split(", ");
         course = Course.getFromName(token[0]);
-        level = Level.getFromName(token[1]);
-        mission = Mission.getFromName(token[2]);
+        mission = Mission.getFromInfo(token[2], token[1]);
+    }
+
+    public Search(Mission mission, Course course) {
+        this.course = course;
+        this.mission = mission;
     }
 
     private void validate(String input) {
-        if (FORMAT.matcher(input).matches()) {
+        if (!FORMAT.matcher(input).matches()) {
             throw new IllegalArgumentException("형식을 다시 확인해 주세요");
         }
+    }
+
+    public List<Mission> getSameLevelMissionsAndCourses() {
+        return Mission.getSameLevelMissions(mission);
+    }
+
+    public Course getCourse() {
+        return course;
     }
 
     @Override
