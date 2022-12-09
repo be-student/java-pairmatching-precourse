@@ -20,7 +20,8 @@ import pairmatching.domain.Search;
 
 public class PairMatchingService implements PairMatchingUseCase {
 
-    private final List<Crew> crew = new ArrayList<>();
+    private final List<String> frontendCrewName = new ArrayList<>();
+    private final List<String> backendCrewName = new ArrayList<>();
     private Map<Search, List<List<Crew>>> matchedResult = new HashMap<>();
 
 
@@ -34,20 +35,20 @@ public class PairMatchingService implements PairMatchingUseCase {
                     new FileReader("src/main/resources/frontend-crew.md"));
             BufferedReader backendReader = new BufferedReader(
                     new FileReader("src/main/resources/backend-crew.md"));
-            readFileByLine(frontendReader, "프론트엔드");
-            readFileByLine(backendReader, "백엔드");
+            readFileByLine(frontendReader, frontendCrewName);
+            readFileByLine(backendReader, backendCrewName);
         } catch (IOException e) {
             throw new IllegalStateException("파일이 없습니다");
         }
     }
 
-    private void readFileByLine(BufferedReader br, String course) throws IOException {
+    private void readFileByLine(BufferedReader br, List<String> crewNames) throws IOException {
         while (true) {
             String name = br.readLine();
             if (name == null) {
                 break;
             }
-            crew.add(new Crew(Course.getFromName(course), name));
+            crewNames.add(name);
         }
     }
 
@@ -60,12 +61,21 @@ public class PairMatchingService implements PairMatchingUseCase {
     @Override
     public void matching(SearchResultCommand searchResultCommand) {
         Search search = new Search(searchResultCommand.getSearch());
-        List<Crew> shuffledCrew = Randoms.shuffle(crew);
-        Crew temp = shuffledCrew.get(0);
-        System.out.println(temp);
+        List<Crew> shuffledCrew;
+        Course course = search.getCourse();
+        if (course.equals(Course.BACKEND)) {
+            shuffledCrew = fromCourseAndNames(Randoms.shuffle(backendCrewName), course);
+        } else {
+            shuffledCrew = fromCourseAndNames(Randoms.shuffle(frontendCrewName), course);
+        }
         List<List<Crew>> matchedCrew = matchingCrews(shuffledCrew, search);
-
         matchedResult.put(search, matchedCrew);
+    }
+
+    private List<Crew> fromCourseAndNames(List<String> crewNames, Course course) {
+        return crewNames.stream()
+                .map(name -> new Crew(course, name))
+                .collect(Collectors.toList());
     }
 
     private List<List<Crew>> matchingCrews(List<Crew> shuffledCrew, Search search) {
@@ -88,6 +98,11 @@ public class PairMatchingService implements PairMatchingUseCase {
             twoPair.add(shuffled.get(i + 1));
             matched.add(twoPair);
         }
+        List<Crew> lastPair = new ArrayList<>();
+        for (int i = twoPairLength; i < shuffled.size(); i++) {
+            lastPair.add(shuffled.get(i));
+        }
+        matched.add(lastPair);
         return matched;
     }
 
@@ -132,14 +147,9 @@ public class PairMatchingService implements PairMatchingUseCase {
     }
 
     private List<String> getCrewsName(List<Crew> crews) {
-        List<String> names = new ArrayList<>();
-        for (Crew oneCrew : crews) {
-            names.add(oneCrew.getName());
-        }
-        return names;
-//        return crews.stream()
-//                .map(Crew::getName)
-//                .collect(Collectors.toList());
+        return crews.stream()
+                .map(Crew::getName)
+                .collect(Collectors.toList());
     }
 
     @Override
