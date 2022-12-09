@@ -1,11 +1,13 @@
 package pairmatching.adapter.in.client;
 
+import pairmatching.application.port.in.PairMatchingUseCase;
+
 public final class QuitStrategy extends PairMatchingStrategy {
 
     private static final String COMMAND = "Q";
 
     @Override
-    public void run() {
+    public void run(PairMatchingUseCase pairMatchingUseCase) {
         //Do Nothing And Only Exit
     }
 

@@ -2,6 +2,7 @@ package pairmatching.adapter.in.client;
 
 import java.util.ArrayList;
 import java.util.List;
+import pairmatching.application.port.in.PairMatchingUseCase;
 
 public abstract class PairMatchingStrategy {
 
@@ -21,7 +22,7 @@ public abstract class PairMatchingStrategy {
         strategies.add(pairMatchingStrategy);
     }
 
-    public abstract void run();
+    public abstract void run(PairMatchingUseCase pairMatchingUseCase);
 
     public abstract boolean isRightCommand(String command);
 }
