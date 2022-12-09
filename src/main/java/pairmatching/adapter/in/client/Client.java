@@ -3,7 +3,6 @@ package pairmatching.adapter.in.client;
 import static pairmatching.util.Repeat.repeat;
 
 import pairmatching.application.port.in.PairMatchingUseCase;
-import pairmatching.application.port.in.SearchResultCommand;
 
 public class Client {
 
@@ -13,47 +12,13 @@ public class Client {
         pairMatchingUseCase = pairMatchingService;
     }
 
-    public void run() {
+    public void run(PairMatchingStrategy exitStrategy) {
         while (true) {
-            Function function = repeat(InputView::askFunction);
-            if (function == Function.QUIT) {
+            PairMatchingStrategy pairMatchingStrategy = repeat(InputView::askPairMatchingStrategy);
+            if (pairMatchingStrategy.equals(exitStrategy)) {
                 break;
             }
-            if (function == Function.SEARCH) {
-                repeat(this::search);
-            }
-            if (function == Function.RESET) {
-                reset();
-            }
-            if (function == Function.MATCHING) {
-                repeat(this::matching);
-            }
+            pairMatchingStrategy.run(pairMatchingUseCase);
         }
-    }
-
-    private void search() {
-        SearchResultCommand searchResultCommand = InputView.askSearch();
-        OutputView.printResult(pairMatchingUseCase.matchingResult(searchResultCommand));
-    }
-
-    private void reset() {
-        pairMatchingUseCase.reset();
-        OutputView.printReset();
-    }
-
-    private void matching() {
-        SearchResultCommand searchResultCommand = InputView.askSearch();
-        if (pairMatchingUseCase.alreadyExist(searchResultCommand)) {
-            ReMatching reMatching = askReMatching();
-            if (reMatching == ReMatching.PASS) {
-                return;
-            }
-        }
-        pairMatchingUseCase.matching(searchResultCommand);
-        OutputView.printResult(pairMatchingUseCase.matchingResult(searchResultCommand));
-    }
-
-    private ReMatching askReMatching() {
-        return repeat(InputView::askReMatching);
     }
 }
