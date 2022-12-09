@@ -19,19 +19,19 @@ public class Client {
                 break;
             }
             if (function == Function.SEARCH) {
-                search();
+                repeat(this::search);
             }
             if (function == Function.RESET) {
                 reset();
             }
             if (function == Function.MATCHING) {
-                matching();
+                repeat(this::matching);
             }
         }
     }
 
     private void search() {
-        SearchResultCommand searchResultCommand = repeat(InputView::askSearch);
+        SearchResultCommand searchResultCommand = InputView.askSearch();
         OutputView.printResult(pairMatchingUseCase.matchingResult(searchResultCommand));
     }
 
@@ -41,7 +41,7 @@ public class Client {
     }
 
     private void matching() {
-        SearchResultCommand searchResultCommand = repeat(InputView::askSearch);
+        SearchResultCommand searchResultCommand = InputView.askSearch();
         if (pairMatchingUseCase.alreadyExist(searchResultCommand)) {
             ReMatching reMatching = askReMatching();
             if (reMatching == ReMatching.PASS) {
@@ -61,7 +61,7 @@ public class Client {
             input.run();
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
-            input.run();
+            repeat(input);
         }
     }
 
@@ -70,7 +70,7 @@ public class Client {
             return input.get();
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
-            return input.get();
+            return repeat(input);
         }
     }
 }
