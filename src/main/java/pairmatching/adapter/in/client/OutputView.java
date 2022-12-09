@@ -9,12 +9,15 @@ public class OutputView {
     }
 
     public static void printError(String errorMessage) {
-        System.out.println("[ERROR]" + errorMessage);
+        System.out.println("[ERROR] : " + errorMessage);
     }
 
     public static void printResult(MatchingResultDto matchingResultDto) {
         List<List<String>> result = matchingResultDto.getResult();
+        System.out.println();
+        System.out.println("페어 매칭 결과입니다.");
         result.forEach(OutputView::printOnePair);
+        System.out.println();
     }
 
     private static void printOnePair(List<String> result) {
