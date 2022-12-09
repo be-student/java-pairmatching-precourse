@@ -1,6 +1,7 @@
 package pairmatching.adapter.in.client;
 
-import java.util.function.Supplier;
+import static pairmatching.util.Repeat.repeat;
+
 import pairmatching.application.port.in.PairMatchingUseCase;
 import pairmatching.application.port.in.SearchResultCommand;
 
@@ -54,23 +55,5 @@ public class Client {
 
     private ReMatching askReMatching() {
         return repeat(InputView::askReMatching);
-    }
-
-    private void repeat(Runnable input) {
-        try {
-            input.run();
-        } catch (IllegalArgumentException e) {
-            OutputView.printError(e.getMessage());
-            repeat(input);
-        }
-    }
-
-    private <T> T repeat(Supplier<T> input) {
-        try {
-            return input.get();
-        } catch (IllegalArgumentException e) {
-            OutputView.printError(e.getMessage());
-            return repeat(input);
-        }
     }
 }
